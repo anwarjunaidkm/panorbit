@@ -1,62 +1,49 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { Col, Row } from 'reactstrap'
-import { allUsersApi } from '../../store/slice/UserSlice';
-import Chathide from '../chatHide/Chathide';
-import ChatScreen from '../chatscreen/ChatScreen';
-import { ChatShow } from '../chatShow/ChatShow';
-import { aj, pic } from '../image/image'
-import Logout from '../logout/Logout';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { Col, Row } from "reactstrap";
+import { allUsersApi } from "../../store/slice/UserSlice";
+import Chathide from "../chatHide/Chathide";
+import ChatScreen from "../chatscreen/ChatScreen";
+import { ChatShow } from "../chatShow/ChatShow";
+import { aj, pic } from "../image/image";
+import Logout from "../logout/Logout";
 
-function Header({selectedUser,users}) {
-
-  const Headername =window.location.pathname
-  var splitUrl = Headername.split('/');
-  const title = splitUrl?.[1].charAt().toUpperCase() + splitUrl?.[1].slice(1)
+function Header({ selectedUser, users }) {
+  const Headername = window.location.pathname;
+  var splitUrl = Headername.split("/");
+  const title = splitUrl?.[1].charAt().toUpperCase() + splitUrl?.[1].slice(1); //titile get from url use params
   console.log(splitUrl?.[1]);
 
-  
-
-
-
-
-  const ref = useRef(null);
-  const [show,setShow] =useState(false)
-  const[chatShow,setChatShow]= useState(false)
-  const[chatScreenShow,setChatScreenShow]= useState(false)
+  const ref = useRef(null); //--------------------hook other click screen hide componet
+  const [show, setShow] = useState(false);
+  const [chatShow, setChatShow] = useState(false);
+  const [chatScreenShow, setChatScreenShow] = useState(false);
 
   const toggleLogout = () => {
     setShow(!show);
-  }
+  };
 
   const toggleChat = () => {
     setChatShow(!chatShow);
-  }
+  };
   const toggleChatScreen = () => {
     setChatScreenShow(!chatScreenShow);
-  }
-//--------------this for any other click on screen hide chat hide -----------
+  };
+  //--------------this for any other click on screen hide chat hide -----------
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setShow(false);
-        setChatScreenShow(false)
-        setChatShow(false)
-      
-       
-       
+        setChatScreenShow(false);
+        setChatShow(false);
       }
-      
-      
-      
-      
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [ref]);
   // ---------------------end ---------------------------------
   return (
@@ -64,7 +51,8 @@ function Header({selectedUser,users}) {
       {/* //-----this line used to show-hide profile-sigin out----- */}
 
       {show && (
-        <div  ref={ref}
+        <div
+          ref={ref}
           style={{
             position: "absolute",
             maxHeight: "285px",
@@ -73,58 +61,55 @@ function Header({selectedUser,users}) {
             top: "65px",
           }}
         >
-        <Logout selectedUser={selectedUser} />
+          <Logout selectedUser={selectedUser} />
         </div>
       )}
       {/* //------------------end---------------------------------------//  */}
 
       {/* //--------------- position chatbox--------------- */}
-{
-  chatShow?
-  <div  ref={ref} 
-  style={{
-    position: "absolute",
-    left: "80%",
-    top: "335px",
-  }}
->
-  <ChatShow  users={users} toggleChat={toggleChat} toggleChatScreen={toggleChatScreen}/>
-</div>
-      
-      :
-      <div   ref={ref}
-        style={{
-          position: "absolute",
-          left: "80%",
-          top: "600px",
-        }}
-      >
-     <Chathide toggleChat={toggleChat} />   
-      </div>
-      
-}
+      {chatShow ? (
+        <div
+          ref={ref}
+          style={{
+            position: "fixed",
+            left: "80%",
+            top: "335px",
+            zIndex: 1,
+          }}
+        >
+          <ChatShow
+            users={users}
+            toggleChat={toggleChat}
+            toggleChatScreen={toggleChatScreen}
+          />
+        </div>
+      ) : (
+        <div
+          ref={ref}
+          style={{
+            position: "fixed",
+            left: "80%",
+            top: "95%",
+          }}
+        >
+          <Chathide toggleChat={toggleChat} />
+        </div>
+      )}
 
-{/* //-------------chat-screen--------------------- */}
-{
-  chatScreenShow && (
-    <div  ref={ref} style={{
-      position: "absolute",
-      left: "65%",
-      top: "435px",
-
-
-  }}>
-    <ChatScreen />
-
-  </div>
-
-
-  )
-}
-  
-      
-
-      
+      {/* //-------------chat-screen--------------------- */}
+      {chatScreenShow && (
+        <div
+          ref={ref}
+          style={{
+            position: "fixed",
+            left: "65%",
+            top: "420px",
+            zIndex: 1,
+          }}
+        >
+          <ChatScreen />
+        </div>
+      )}
 
       <div className="header-main">
         <h4 className="header-left"> {title} </h4>
@@ -144,4 +129,4 @@ function Header({selectedUser,users}) {
   );
 }
 
-export default Header
+export default Header;

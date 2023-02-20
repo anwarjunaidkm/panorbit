@@ -209,6 +209,8 @@ align-items: center;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   outline: none !important;
   border: none !important;
+  z-index: 1;
+
 
 
  }
@@ -289,6 +291,8 @@ background-color: var(--primary-blue) !important;
   min-width: 180px !important;
   border-radius: 8px 10px 0px 0px !important;
   border-color: var(--primary-blue) !important;
+  z-index: 1;
+
   
 
 
@@ -346,6 +350,7 @@ background-color: var(--primary-blue) !important;
   min-width: 180px !important;
   border-radius: 8px 10px 0px 0px !important;
   border-color: var(--primary-blue) !important;
+  z-index: 1;
  
 
 
@@ -390,3 +395,4 @@ background-color: var(--primary-blue) !important;
   margin: 6px 0 6px auto;
 
 }
+/* -----------map--------- */

@@ -1,47 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { Col, Row } from 'reactstrap'
-import { allUsersApi, singleUserDetail } from '../../store/slice/UserSlice';
-import { aj } from '../image/image'
-import Layout from '../layout/Layout'
-import Logout from '../logout/Logout';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { Col, Row } from "reactstrap";
+import { allUsersApi, singleUserDetail } from "../../store/slice/UserSlice";
+import { aj } from "../image/image";
+import Layout from "../layout/Layout";
+import Logout from "../logout/Logout";
+import UserMap from "../map/UserMap";
 
 function Profile() {
-    const params = useParams()
-    const dispatch =useDispatch()
-    const { userList, } = useSelector((state) => state.user);
-    const users = userList?.users
-    const [selectedUser,setSelectedUser]=useState()
-    var id = ""
-    if(params.id){
-      id=params.id;
-      localStorage.setItem("id",id)
-    }else{
-      id = localStorage.getItem("id")
-    }
-    console.log("fullusers ",users);
-    console.log("selected ",selectedUser);
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { userList } = useSelector((state) => state.user);
+  const users = userList?.users;
+  const [selectedUser, setSelectedUser] = useState();
 
-      useEffect(() => {
-          dispatch(allUsersApi());
-          setSelectedUser(users?.find((user) => user && user.id === +id))
-        }, []);
+  var id = "";
+  if (params.id) {
+    id = params.id;
+    localStorage.setItem("id", id); //-------------- id store local storage
+  } else {
+    id = localStorage.getItem("id"); //-------------get ifd from local
+  }
+  console.log("fullusers ", users);
+  console.log("selected ", selectedUser);
 
-        // useEffect(()=>{
-        //   dispatch(singleUserDetail())
-        // },[dispatch])
- 
-
-
+  useEffect(() => {
+    dispatch(allUsersApi());
+    setSelectedUser(users?.find((user) => user && user.id === +id));
+  }, []);
 
   return (
     <>
       <Layout>
-        {/* <div style={{position:"absolute",maxHeight:'285px',minWidth:"200px",left:"84%"}}>
-
-        <Logout />
-        </div> */}
         <div className="profile-main">
           <Row>
             <Col className="profile-left-side" md={5}>
@@ -62,7 +53,10 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser?.username}</span>
+                        <span className="label-key">
+                          {" "}
+                          : {selectedUser?.username}
+                        </span>
                       </td>
                     </tr>
                     <tr>
@@ -83,7 +77,9 @@ function Profile() {
                         <label className="profile-labels">Phone </label>
                       </td>
                       <td>
-                        <span className="label-key">: {selectedUser?.phone}</span>{" "}
+                        <span className="label-key">
+                          : {selectedUser?.phone}
+                        </span>{" "}
                       </td>
                     </tr>
                     <tr>
@@ -92,7 +88,10 @@ function Profile() {
                         <label className="profile-labels">Website </label>{" "}
                       </td>
                       <td>
-                        <spam className="label-key"> : {selectedUser?.website}</spam>{" "}
+                        <spam className="label-key">
+                          {" "}
+                          : {selectedUser?.website}
+                        </spam>{" "}
                       </td>
                     </tr>
                   </table>
@@ -110,7 +109,10 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser?.company.name}</span>
+                        <span className="label-key">
+                          {" "}
+                          : {selectedUser?.company.name}
+                        </span>
                       </td>
                     </tr>
                     <tr>
@@ -160,7 +162,10 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser?.address.street}</span>
+                        <span className="label-key">
+                          {" "}
+                          : {selectedUser?.address.street}
+                        </span>
                       </td>
                     </tr>
                     <tr>
@@ -170,7 +175,10 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> :{selectedUser?.address.suite}</span>{" "}
+                        <span className="label-key">
+                          {" "}
+                          :{selectedUser?.address.suite}
+                        </span>{" "}
                       </td>
                     </tr>
                     <tr>
@@ -180,7 +188,10 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser?.address.city}</span>{" "}
+                        <span className="label-key">
+                          {" "}
+                          : {selectedUser?.address.city}
+                        </span>{" "}
                       </td>
                     </tr>
                     <tr>
@@ -190,7 +201,10 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser?.address.zipcode}</span>{" "}
+                        <span className="label-key">
+                          {" "}
+                          : {selectedUser?.address.zipcode}
+                        </span>{" "}
                       </td>
                     </tr>
                   </table>
@@ -199,7 +213,7 @@ function Profile() {
 
               <Row>
                 <Col>
-                  map
+                  <UserMap selectedUser={selectedUser} />
                 </Col>
               </Row>
             </Col>
@@ -210,4 +224,4 @@ function Profile() {
   );
 }
 
-export default Profile
+export default Profile;

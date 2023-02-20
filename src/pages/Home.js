@@ -6,27 +6,14 @@ import { pic } from "../components/image/image";
 import { allUsersApi, setSelectedUser } from "../store/slice/UserSlice";
 
 function Home() {
-        
-    const dispatch = useDispatch()
-    const { userList } = useSelector((state) => state.user);
-    const users =userList.users
-    console.log("LIST==:",users);
+  const dispatch = useDispatch();
+  const { userList } = useSelector((state) => state.user);
+  const users = userList.users;
+  console.log("LIST==:", users);
 
-    // const [id, setId] = useState("")
-
-    // console.log("id", id);
-    //   localStorage.setItem("id",id)
-
-
-
-    useEffect(() => {
-      dispatch(allUsersApi());
-    }, []);
-    
-
-   
-
-
+  useEffect(() => {
+    dispatch(allUsersApi());
+  }, []);
 
   return (
     <section className="banner">
@@ -48,34 +35,36 @@ function Home() {
           <h3 className="home-card-header">Select an account</h3>
           <div className="card-item-list">
             <Table responsive>
-              <tbody >
+              <tbody>
+                {/* //--------------------Array-Mapping----------------------- */}
 
-        {/* //--------------------Array-Mapping----------------------- */}
-
-                {users?.map((item)=>{
-                    return(
-
-                        <tr>
-                        <td scope="row" className=" d-flex align-items-end  ">
-                          <img className="home-icon" src={item.profilepicture} alt="" />
-                      <Link onChange={()=>{window.localStorage.setItem("id",item?.id)}}  style={{textDecoration:"none"}} to={`profile/${item?.id}`} >    <h4 className="card-names-list">
-      
-                          {item.name}
-                          </h4></Link>
-                        </td>
-                      </tr>
-
-
-
-                    )
+                {users?.map((item) => {
+                  return (
+                    <tr>
+                      <td scope="row" className=" d-flex align-items-end  ">
+                        <img
+                          className="home-icon"
+                          src={item.profilepicture}
+                          alt=""
+                        />
+                        <Link
+                          onChange={() => {
+                            window.localStorage.setItem("id", item?.id);
+                          }}
+                          style={{ textDecoration: "none" }}
+                          to={`profile/${item?.id}`}
+                        >
+                          {" "}
+                          <h4 className="card-names-list">{item.name}</h4>
+                        </Link>
+                      </td>
+                    </tr>
+                  );
                 })}
-               
-               
-               
               </tbody>
             </Table>
           </div>
-          <div style={{minHeight:"15px"}}></div>
+          <div style={{ minHeight: "15px" }}></div>
         </Card>
       </div>
     </section>

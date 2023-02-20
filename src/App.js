@@ -9,9 +9,7 @@ import Post from './components/posts/Post';
 import Gallery from './components/gallery/Gallery';
 import Todo from './components/todo/Todo';
 import Logout from './components/logout/Logout';
-import Chathide from './components/chatHide/Chathide';
-import { ChatShow } from './components/chatShow/ChatShow';
-import ChatScreen from './components/chatscreen/ChatScreen';
+
 
 function App() {
   return (
@@ -27,9 +25,6 @@ function App() {
         <Route path="gallery" element={<Gallery />} />
         <Route path="todo" element={<Todo />} />
         <Route path="logout" element={<Logout />} />
-        <Route path="chathide" element={<Chathide/>} />
-        <Route path="chatshow" element={<ChatShow />} />
-        <Route path="chatscreen" element={<ChatScreen />} />
          
        
       </Routes>
