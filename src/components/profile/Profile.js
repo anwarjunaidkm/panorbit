@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Col, Row } from 'reactstrap'
-import { allUsersApi, setSelectedUser } from '../../store/slice/UserSlice';
+import { allUsersApi, singleUserDetail } from '../../store/slice/UserSlice';
 import { aj } from '../image/image'
 import Layout from '../layout/Layout'
 import Logout from '../logout/Logout';
@@ -11,21 +11,27 @@ function Profile() {
     const params = useParams()
     const dispatch =useDispatch()
     const { userList, } = useSelector((state) => state.user);
-    const users = userList.users
-    
-    const selectedUser = users.find((user) => user && user.id === +params.id);
-
-    // console.log("objet==",selectedUser);
-    console.log("fullusers",users);
-    console.log("selected",selectedUser);
+    const users = userList?.users
+    const [selectedUser,setSelectedUser]=useState()
+    var id = ""
+    if(params.id){
+      id=params.id;
+      localStorage.setItem("id",id)
+    }else{
+      id = localStorage.getItem("id")
+    }
+    console.log("fullusers ",users);
+    console.log("selected ",selectedUser);
 
       useEffect(() => {
           dispatch(allUsersApi());
+          setSelectedUser(users?.find((user) => user && user.id === +id))
         }, []);
-  
-  //   useEffect(() => {
-  //     dispatch(setSelectedUser({ id: +params.id }));
-  // }, [dispatch, params.id]);
+
+        // useEffect(()=>{
+        //   dispatch(singleUserDetail())
+        // },[dispatch])
+ 
 
 
 
@@ -42,8 +48,8 @@ function Profile() {
               <Row>
                 <div>
                   <Col>
-                    <img src={selectedUser.profilepicture} alt="" />
-                    <h3 className="profile-text">{selectedUser.name}</h3>
+                    <img src={selectedUser?.profilepicture} alt="" />
+                    <h3 className="profile-text">{selectedUser?.name}</h3>
                   </Col>
                 </div>
               </Row>
@@ -56,7 +62,7 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser.username}</span>
+                        <span className="label-key"> : {selectedUser?.username}</span>
                       </td>
                     </tr>
                     <tr>
@@ -68,7 +74,7 @@ function Profile() {
                         {" "}
                         <span className="label-key">
                           {" "}
-                          : {selectedUser.email}
+                          : {selectedUser?.email}
                         </span>{" "}
                       </td>
                     </tr>
@@ -77,7 +83,7 @@ function Profile() {
                         <label className="profile-labels">Phone </label>
                       </td>
                       <td>
-                        <span className="label-key">: {selectedUser.phone}</span>{" "}
+                        <span className="label-key">: {selectedUser?.phone}</span>{" "}
                       </td>
                     </tr>
                     <tr>
@@ -86,7 +92,7 @@ function Profile() {
                         <label className="profile-labels">Website </label>{" "}
                       </td>
                       <td>
-                        <spam className="label-key"> : {selectedUser.website}</spam>{" "}
+                        <spam className="label-key"> : {selectedUser?.website}</spam>{" "}
                       </td>
                     </tr>
                   </table>
@@ -104,7 +110,7 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser.company.name}</span>
+                        <span className="label-key"> : {selectedUser?.company.name}</span>
                       </td>
                     </tr>
                     <tr>
@@ -116,7 +122,7 @@ function Profile() {
                         {" "}
                         <span className="label-key">
                           {" "}
-                          :{selectedUser.company.catchPhrase}
+                          :{selectedUser?.company.catchPhrase}
                         </span>{" "}
                       </td>
                     </tr>
@@ -129,7 +135,7 @@ function Profile() {
                         {" "}
                         <span className="label-key">
                           {" "}
-                          : {selectedUser.company.bs}
+                          : {selectedUser?.company.bs}
                         </span>{" "}
                       </td>
                     </tr>
@@ -154,7 +160,7 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser.address.street}</span>
+                        <span className="label-key"> : {selectedUser?.address.street}</span>
                       </td>
                     </tr>
                     <tr>
@@ -164,7 +170,7 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> :{selectedUser.address.suite}</span>{" "}
+                        <span className="label-key"> :{selectedUser?.address.suite}</span>{" "}
                       </td>
                     </tr>
                     <tr>
@@ -174,7 +180,7 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser.address.city}</span>{" "}
+                        <span className="label-key"> : {selectedUser?.address.city}</span>{" "}
                       </td>
                     </tr>
                     <tr>
@@ -184,7 +190,7 @@ function Profile() {
                       </td>
                       <td>
                         {" "}
-                        <span className="label-key"> : {selectedUser.address.zipcode}</span>{" "}
+                        <span className="label-key"> : {selectedUser?.address.zipcode}</span>{" "}
                       </td>
                     </tr>
                   </table>

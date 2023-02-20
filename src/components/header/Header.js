@@ -1,13 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import { Col, Row } from 'reactstrap'
+import { allUsersApi } from '../../store/slice/UserSlice';
 import Chathide from '../chatHide/Chathide';
 import ChatScreen from '../chatscreen/ChatScreen';
 import { ChatShow } from '../chatShow/ChatShow';
 import { aj, pic } from '../image/image'
 import Logout from '../logout/Logout';
 
-function Header() {
+function Header({selectedUser,users}) {
+
+  const Headername =window.location.pathname
+  var splitUrl = Headername.split('/');
+  const title = splitUrl?.[1].charAt().toUpperCase() + splitUrl?.[1].slice(1)
+  console.log(splitUrl?.[1]);
+
+  
+
+
+
 
   const ref = useRef(null);
   const [show,setShow] =useState(false)
@@ -61,7 +73,7 @@ function Header() {
             top: "65px",
           }}
         >
-        <Logout />
+        <Logout selectedUser={selectedUser} />
         </div>
       )}
       {/* //------------------end---------------------------------------//  */}
@@ -76,7 +88,7 @@ function Header() {
     top: "335px",
   }}
 >
-  <ChatShow toggleChat={toggleChat} toggleChatScreen={toggleChatScreen}/>
+  <ChatShow  users={users} toggleChat={toggleChat} toggleChatScreen={toggleChatScreen}/>
 </div>
       
       :
@@ -115,13 +127,13 @@ function Header() {
       
 
       <div className="header-main">
-        <h4 className="header-left"> Profile </h4>
+        <h4 className="header-left"> {title} </h4>
 
         <div className="header-right-side">
           <img className="profile-image" src={aj} alt="" />
           <Link onClick={toggleLogout} style={{ textDecoration: "none" }}>
             {" "}
-            <h3 className="header-user">Anwarjuhnaid</h3>
+            <h3 className="header-user">{selectedUser?.name}</h3>
           </Link>
         </div>
       </div>

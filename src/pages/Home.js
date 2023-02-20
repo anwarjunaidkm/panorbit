@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, Table } from "reactstrap";
@@ -11,6 +11,11 @@ function Home() {
     const { userList } = useSelector((state) => state.user);
     const users =userList.users
     console.log("LIST==:",users);
+
+    // const [id, setId] = useState("")
+
+    // console.log("id", id);
+    //   localStorage.setItem("id",id)
 
 
 
@@ -53,7 +58,7 @@ function Home() {
                         <tr>
                         <td scope="row" className=" d-flex align-items-end  ">
                           <img className="home-icon" src={item.profilepicture} alt="" />
-                      <Link style={{textDecoration:"none"}} to={`profile/${item?.id}`} >    <h4  className="card-names-list">
+                      <Link onChange={()=>{window.localStorage.setItem("id",item?.id)}}  style={{textDecoration:"none"}} to={`profile/${item?.id}`} >    <h4 className="card-names-list">
       
                           {item.name}
                           </h4></Link>
