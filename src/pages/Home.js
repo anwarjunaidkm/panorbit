@@ -10,7 +10,7 @@ function Home() {
   const { userList } = useSelector((state) => state.user);
   const users = userList.users;
   console.log("LIST==:", users);
-
+//apicall
   useEffect(() => {
     dispatch(allUsersApi());
   }, []);
